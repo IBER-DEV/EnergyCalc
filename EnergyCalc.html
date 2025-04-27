@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,22 +16,24 @@
                         electric: {
                             100: '#e0f7ff',
                             500: '#00a8ff',
-                            900: '#005a8c',
+                            700: '#0077cc',
+                            800: '#005a8c',
+                            900: '#003d66'
                         },
                         energy: {
                             100: '#fff8e0',
                             500: '#ffc107',
-                            900: '#8d6e00',
+                            900: '#8d6e00'
                         }
                     },
                     animation: {
                         'fade-in': 'fadeIn 0.5s ease-in-out',
-                        'pulse-slow': 'pulse 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s ease-in-out infinite'
                     },
                     keyframes: {
                         fadeIn: {
                             '0%': { opacity: '0' },
-                            '100%': { opacity: '1' },
+                            '100%': { opacity: '1' }
                         }
                     }
                 }
@@ -41,23 +44,29 @@
         .custom-bg {
             background: radial-gradient(circle at 10% 20%, rgba(224, 247, 255, 0.8) 0%, rgba(255, 255, 255, 0) 100%);
         }
+
         .dark .custom-bg {
             background: radial-gradient(circle at 10% 20%, rgba(0, 90, 140, 0.8) 0%, rgba(15, 23, 42, 0) 100%);
         }
+
         .appliance-card {
             transition: all 0.3s ease;
             transform: translateY(0);
         }
+
         .appliance-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px -5px rgba(0, 168, 255, 0.2);
         }
+
         .dark .appliance-card:hover {
             box-shadow: 0 10px 25px -5px rgba(0, 168, 255, 0.3);
         }
+
         .nav-link {
             position: relative;
         }
+
         .nav-link::after {
             content: '';
             position: absolute;
@@ -68,23 +77,30 @@
             background-color: currentColor;
             transition: width 0.3s ease;
         }
+
         .nav-link:hover::after {
             width: 100%;
         }
+
         .active::after {
             width: 100%;
         }
+
         .input-highlight {
             box-shadow: 0 0 0 2px rgba(0, 168, 255, 0.5);
         }
+
         .consumption-bar {
             transition: width 1s ease-in-out;
         }
     </style>
 </head>
+
 <body class="bg-white text-gray-800 dark:bg-slate-900 dark:text-gray-100 transition-colors duration-300">
     <!-- Theme Toggle -->
-    <button id="theme-toggle" class="fixed top-6 right-6 z-50 p-2 rounded-full bg-white/80 dark:bg-slate-800/80 shadow-lg backdrop-blur-sm">
+    <button id="theme-toggle"
+        class="fixed top-6 right-6 z-50 p-2 rounded-full bg-white/80 dark:bg-slate-800/80 shadow-lg backdrop-blur-sm"
+        aria-label="Cambiar tema">
         <i id="theme-icon" class="fas fa-moon text-gray-800 dark:text-yellow-300"></i>
     </button>
 
@@ -92,14 +108,15 @@
     <nav class="fixed top-0 left-0 right-0 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm z-40 shadow-sm">
         <div class="container mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
-                <a href="#" class="text-2xl font-bold bg-gradient-to-r from-electric-500 to-energy-500 bg-clip-text text-transparent">EnergyCalc</a>
+                <a href="#"
+                    class="text-2xl font-bold bg-gradient-to-r from-electric-500 to-energy-500 bg-clip-text text-transparent">EnergyCalc</a>
                 <div class="hidden md:flex space-x-8">
                     <a href="#calculator" class="nav-link active">Calculadora</a>
                     <a href="#appliances" class="nav-link">Electrodomésticos</a>
                     <a href="#tips" class="nav-link">Consejos</a>
                     <a href="#results" class="nav-link">Resultados</a>
                 </div>
-                <button id="mobile-menu-button" class="md:hidden">
+                <button id="mobile-menu-button" class="md:hidden" aria-label="Menú móvil">
                     <i class="fas fa-bars text-xl"></i>
                 </button>
             </div>
@@ -121,22 +138,66 @@
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-12 md:mb-0">
                     <h1 class="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
-                        Calcula tu <span class="bg-gradient-to-r from-electric-500 to-energy-500 bg-clip-text text-transparent">consumo</span>
+                        Calcula tu <span
+                            class="bg-gradient-to-r from-electric-500 to-energy-500 bg-clip-text text-transparent">consumo</span>
                     </h1>
-                    <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-gray-600 dark:text-gray-300 animate-fade-in" style="animation-delay: 0.2s;">
+                    <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-gray-600 dark:text-gray-300 animate-fade-in"
+                        style="animation-delay: 0.2s;">
                         Descubre cuánto gastas en electricidad
                     </h2>
-                    <p class="text-lg mb-8 text-gray-500 dark:text-gray-400 max-w-lg animate-fade-in" style="animation-delay: 0.4s;">
-                        Introduce los datos de tus electrodomésticos para obtener una estimación de tu consumo energético mensual y su costo.
+                    <p class="text-lg mb-8 text-gray-500 dark:text-gray-400 max-w-lg animate-fade-in"
+                        style="animation-delay: 0.4s;">
+                        Introduce los datos de tus electrodomésticos para obtener una estimación de tu consumo
+                        energético mensual y su costo.
                     </p>
                     <div class="animate-fade-in" style="animation-delay: 0.6s;">
                         <div class="mb-6">
-                            <label for="tarifa" class="block mb-2 font-medium">Tarifa eléctrica (€/kWh)</label>
-                            <input type="number" id="tarifa" step="0.0001" min="0" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-electric-500 bg-white dark:bg-slate-700" placeholder="Ej: 0.15" value="0.15">
+                            <label for="currency-selector" class="block mb-2 font-medium">Moneda</label>
+                            <select id="currency-selector"
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-electric-500 bg-white dark:bg-slate-700"
+                                aria-label="Seleccionar moneda">
+                                <option value="EUR">Euros (€)</option>
+                                <option value="USD">Dólares ($)</option>
+                                <option value="GBP">Libras (£)</option>
+                                <option value="COP">Pesos Colombianos (COP)</option>
+                            </select>
+                        </div>
+                        <div class="mb-6">
+                            <label for="tarifa" class="block mb-2 font-medium">Tarifa eléctrica (por kWh)</label>
+                            <input type="number" id="tarifa" step="0.01" min="0"
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-electric-500 bg-white dark:bg-slate-700"
+                                placeholder="Ej: 0.15 (EUR) o 600 (COP)" value="0.15">
                             <div id="tarifa-error" class="text-sm text-red-500 mt-1 hidden"></div>
                         </div>
-                        <button id="calculate-btn" class="px-6 py-3 bg-gradient-to-r from-electric-500 to-energy-500 text-white rounded-lg shadow-lg hover:from-electric-600 hover:to-energy-600 transition-all w-full">
-                            Calcular Consumo
+                        <div class="flex space-x-4">
+                            <button id="calculate-btn"
+                                class="flex-1 px-6 py-3 bg-gradient-to-r from-electric-500 to-energy-500 text-white rounded-lg shadow-lg hover:from-electric-600 hover:to-energy-600 transition-all"
+                                aria-label="Calcular consumo energético">
+                                Calcular Consumo
+                            </button>
+                            <button id="reset-calculator"
+                                class="px-6 py-3 bg-red-500 text-white rounded-lg shadow-lg hover:bg-red-600 transition-all"
+                                aria-label="Reiniciar calculadora">
+                                Reiniciar
+                            </button>
+                        </div>
+                        <div class="mt-4 flex space-x-4">
+                            <button id="export-data"
+                                class="flex-1 px-6 py-3 bg-gray-500 text-white rounded-lg shadow-lg hover:bg-gray-600 transition-all"
+                                aria-label="Exportar datos">
+                                Exportar Datos
+                            </button>
+                            <button id="import-data"
+                                class="flex-1 px-6 py-3 bg-gray-500 text-white rounded-lg shadow-lg hover:bg-gray-600 transition-all"
+                                aria-label="Importar datos">
+                                Importar Datos
+                            </button>
+                            <input type="file" id="import-file" accept=".json" class="hidden">
+                        </div>
+                        <button id="print-report"
+                            class="mt-4 w-full px-6 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 transition-all"
+                            aria-label="Imprimir reporte">
+                            Imprimir Reporte
                         </button>
                     </div>
                 </div>
@@ -145,11 +206,11 @@
                         <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-xl">
                             <div class="flex justify-between items-center mb-6">
                                 <h3 class="text-xl font-bold">Resumen</h3>
-                                <div class="text-sm bg-electric-100 dark:bg-electric-900 text-electric-800 dark:text-electric-200 px-3 py-1 rounded-full">
+                                <div
+                                    class="text-sm bg-electric-100 dark:bg-electric-900 text-electric-800 dark:text-electric-200 px-3 py-1 rounded-full">
                                     <span id="appliance-count">0</span> aparatos
                                 </div>
                             </div>
-                            
                             <div class="space-y-4">
                                 <div>
                                     <div class="flex justify-between mb-1">
@@ -157,31 +218,32 @@
                                         <span id="daily-consumption" class="text-sm">0 kWh</span>
                                     </div>
                                     <div class="w-full bg-gray-200 dark:bg-slate-700 rounded-full h-2.5">
-                                        <div id="daily-bar" class="consumption-bar h-2.5 rounded-full bg-electric-500" style="width: 0%"></div>
+                                        <div id="daily-bar" class="consumption-bar h-2.5 rounded-full bg-electric-500"
+                                            style="width: 0%"></div>
                                     </div>
                                 </div>
-                                
                                 <div>
                                     <div class="flex justify-between mb-1">
                                         <span class="text-sm font-medium">Consumo mensual</span>
                                         <span id="monthly-consumption" class="text-sm">0 kWh</span>
                                     </div>
                                     <div class="w-full bg-gray-200 dark:bg-slate-700 rounded-full h-2.5">
-                                        <div id="monthly-bar" class="consumption-bar h-2.5 rounded-full bg-energy-500" style="width: 0%"></div>
+                                        <div id="monthly-bar" class="consumption-bar h-2.5 rounded-full bg-energy-500"
+                                            style="width: 0%"></div>
                                     </div>
                                 </div>
-                                
                                 <div>
                                     <div class="flex justify-between mb-1">
                                         <span class="text-sm font-medium">Costo mensual</span>
-                                        <span id="monthly-cost" class="text-sm">€0.00</span>
+                                        <span id="monthly-cost" class="text-sm">0.00</span>
                                     </div>
                                     <div class="w-full bg-gray-200 dark:bg-slate-700 rounded-full h-2.5">
-                                        <div id="cost-bar" class="consumption-bar h-2.5 rounded-full bg-gradient-to-r from-electric-500 to-energy-500" style="width: 0%"></div>
+                                        <div id="cost-bar"
+                                            class="consumption-bar h-2.5 rounded-full bg-gradient-to-r from-electric-500 to-energy-500"
+                                            style="width: 0%"></div>
                                     </div>
                                 </div>
                             </div>
-                            
                             <div class="mt-6 pt-6 border-t border-gray-200 dark:border-slate-700">
                                 <div class="flex justify-between">
                                     <span class="font-medium">Consumo anual estimado:</span>
@@ -189,7 +251,8 @@
                                 </div>
                                 <div class="flex justify-between mt-2">
                                     <span class="font-medium">Costo anual estimado:</span>
-                                    <span id="annual-cost" class="font-bold text-electric-600 dark:text-electric-400">€0.00</span>
+                                    <span id="annual-cost"
+                                        class="font-bold text-electric-600 dark:text-electric-400">0.00</span>
                                 </div>
                             </div>
                         </div>
@@ -203,10 +266,11 @@
     <section id="appliances" class="py-20 bg-gray-50 dark:bg-slate-800">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl font-bold text-center mb-16 relative">
-                <span class="bg-gradient-to-r from-electric-500 to-energy-500 bg-clip-text text-transparent">Tus Electrodomésticos</span>
-                <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-electric-500 to-energy-500 rounded-full"></span>
+                <span class="bg-gradient-to-r from-electric-500 to-energy-500 bg-clip-text text-transparent">Tus
+                    Electrodomésticos</span>
+                <span
+                    class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-electric-500 to-energy-500 rounded-full"></span>
             </h2>
-            
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12" id="appliances-container">
                 <!-- Default appliance - can be duplicated -->
                 <div class="appliance-card bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-lg p-6">
@@ -215,82 +279,104 @@
                             <h3 class="text-xl font-bold">Nuevo Electrodoméstico</h3>
                             <p class="text-sm text-gray-500 dark:text-gray-400">Añade los detalles de consumo</p>
                         </div>
-                        <button class="delete-appliance text-red-500 hover:text-red-700 dark:hover:text-red-400">
+                        <button class="delete-appliance text-red-500 hover:text-red-700 dark:hover:text-red-400"
+                            aria-label="Eliminar electrodoméstico">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
-                    
                     <div class="space-y-4">
                         <div>
-                            <label class="block mb-1 font-medium">Nombre</label>
-                            <input type="text" class="appliance-name w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-electric-500 bg-white dark:bg-slate-700" placeholder="Ej: Nevera">
+                            <label for="appliance-name" class="block mb-1 font-medium">Nombre</label>
+                            <input type="text"
+                                class="appliance-name w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-electric-500 bg-white dark:bg-slate-700"
+                                placeholder="Ej: Nevera" id="appliance-name">
                         </div>
-                        
                         <div>
-                            <label class="block mb-1 font-medium">Potencia (W)</label>
-                            <input type="number" class="appliance-watts w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-electric-500 bg-white dark:bg-slate-700" placeholder="Ej: 150" min="0">
+                            <label for="appliance-watts" class="block mb-1 font-medium">Potencia (W)</label>
+                            <input type="number"
+                                class="appliance-watts w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-electric-500 bg-white dark:bg-slate-700"
+                                placeholder="Ej: 150" min="0" id="appliance-watts">
                             <div class="input-error text-sm text-red-500 mt-1 hidden"></div>
                         </div>
-                        
                         <div>
-                            <label class="block mb-1 font-medium">Horas de uso diario</label>
-                            <input type="number" class="appliance-hours w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-electric-500 bg-white dark:bg-slate-700" placeholder="Ej: 24" min="0" max="24" step="0.5">
+                            <label for="appliance-hours" class="block mb-1 font-medium">Horas de uso diario</label>
+                            <input type="number"
+                                class="appliance-hours w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-electric-500 bg-white dark:bg-slate-700"
+                                placeholder="Ej: 24" min="0" max="24" step="0.5" id="appliance-hours">
                             <div class="input-error text-sm text-red-500 mt-1 hidden"></div>
                         </div>
-                        
                         <div>
-                            <label class="block mb-1 font-medium">Días de uso al mes</label>
-                            <input type="number" class="appliance-days w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-electric-500 bg-white dark:bg-slate-700" placeholder="Ej: 30" min="0" max="31">
+                            <label for="appliance-days" class="block mb-1 font-medium">Días de uso al mes</label>
+                            <input type="number"
+                                class="appliance-days w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-electric-500 bg-white dark:bg-slate-700"
+                                placeholder="Ej: 30" min="0" max="31" id="appliance-days">
                             <div class="input-error text-sm text-red-500 mt-1 hidden"></div>
                         </div>
                     </div>
-                    
                     <div class="mt-4 pt-4 border-t border-gray-200 dark:border-slate-700">
                         <div class="flex justify-between items-center">
                             <span class="text-sm font-medium">Consumo estimado:</span>
-                            <span class="appliance-estimate text-sm font-bold text-electric-600 dark:text-electric-400">0 kWh/mes</span>
+                            <span
+                                class="appliance-estimate text-sm font-bold text-electric-600 dark:text-electric-400">0
+                                kWh/mes</span>
                         </div>
                     </div>
                 </div>
             </div>
-            
             <div class="text-center">
-                <button id="add-appliance" class="px-6 py-3 bg-gradient-to-r from-electric-500 to-energy-500 text-white rounded-lg shadow-lg hover:from-electric-600 hover:to-energy-600 transition-all inline-flex items-center">
+                <button id="add-appliance"
+                    class="px-6 py-3 bg-gradient-to-r from-electric-500 to-energy-500 text-white rounded-lg shadow-lg hover:from-electric-600 hover:to-energy-600 transition-all inline-flex items-center"
+                    aria-label="Añadir electrodoméstico">
                     <i class="fas fa-plus mr-2"></i>
                     Añadir Electrodoméstico
                 </button>
             </div>
-            
             <!-- Common Appliances -->
             <div class="mt-16">
                 <h3 class="text-xl font-bold mb-6 text-center">Electrodomésticos Comunes</h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                    <button class="common-appliance p-4 bg-white dark:bg-slate-700 rounded-lg shadow hover:shadow-md transition-all text-center" data-name="Nevera" data-watts="150" data-hours="24" data-days="30">
+                    <button
+                        class="common-appliance p-4 bg-white dark:bg-slate-700 rounded-lg shadow hover:shadow-md transition-all text-center"
+                        data-name="Nevera" data-watts="150" data-hours="24" data-days="30" aria-label="Añadir Nevera">
                         <i class="fas fa-snowflake text-3xl text-electric-500 mb-2"></i>
                         <p class="font-medium">Nevera</p>
                         <p class="text-xs text-gray-500 dark:text-gray-400">150W, 24h/día</p>
                     </button>
-                    <button class="common-appliance p-4 bg-white dark:bg-slate-700 rounded-lg shadow hover:shadow-md transition-all text-center" data-name="Televisor" data-watts="100" data-hours="4" data-days="30">
+                    <button
+                        class="common-appliance p-4 bg-white dark:bg-slate-700 rounded-lg shadow hover:shadow-md transition-all text-center"
+                        data-name="Televisor" data-watts="100" data-hours="4" data-days="30"
+                        aria-label="Añadir Televisor">
                         <i class="fas fa-tv text-3xl text-electric-500 mb-2"></i>
                         <p class="font-medium">Televisor</p>
                         <p class="text-xs text-gray-500 dark:text-gray-400">100W, 4h/día</p>
                     </button>
-                    <button class="common-appliance p-4 bg-white dark:bg-slate-700 rounded-lg shadow hover:shadow-md transition-all text-center" data-name="Lavadora" data-watts="500" data-hours="1" data-days="12">
+                    <button
+                        class="common-appliance p-4 bg-white dark:bg-slate-700 rounded-lg shadow hover:shadow-md transition-all text-center"
+                        data-name="Lavadora" data-watts="500" data-hours="1" data-days="12"
+                        aria-label="Añadir Lavadora">
                         <i class="fas fa-tshirt text-3xl text-electric-500 mb-2"></i>
                         <p class="font-medium">Lavadora</p>
                         <p class="text-xs text-gray-500 dark:text-gray-400">500W, 1h/día</p>
                     </button>
-                    <button class="common-appliance p-4 bg-white dark:bg-slate-700 rounded-lg shadow hover:shadow-md transition-all text-center" data-name="Ordenador" data-watts="200" data-hours="6" data-days="22">
+                    <button
+                        class="common-appliance p-4 bg-white dark:bg-slate-700 rounded-lg shadow hover:shadow-md transition-all text-center"
+                        data-name="Ordenador" data-watts="200" data-hours="6" data-days="22"
+                        aria-label="Añadir Ordenador">
                         <i class="fas fa-laptop text-3xl text-electric-500 mb-2"></i>
                         <p class="font-medium">Ordenador</p>
                         <p class="text-xs text-gray-500 dark:text-gray-400">200W, 6h/día</p>
                     </button>
-                    <button class="common-appliance p-4 bg-white dark:bg-slate-700 rounded-lg shadow hover:shadow-md transition-all text-center" data-name="Aire Acond." data-watts="1000" data-hours="5" data-days="30">
+                    <button
+                        class="common-appliance p-4 bg-white dark:bg-slate-700 rounded-lg shadow hover:shadow-md transition-all text-center"
+                        data-name="Aire Acond." data-watts="1000" data-hours="5" data-days="30"
+                        aria-label="Añadir Aire Acondicionado">
                         <i class="fas fa-wind text-3xl text-electric-500 mb-2"></i>
                         <p class="font-medium">Aire Acond.</p>
                         <p class="text-xs text-gray-500 dark:text-gray-400">1000W, 5h/día</p>
                     </button>
-                    <button class="common-appliance p-4 bg-white dark:bg-slate-700 rounded-lg shadow hover:shadow-md transition-all text-center" data-name="Horno" data-watts="1200" data-hours="0.5" data-days="15">
+                    <button
+                        class="common-appliance p-4 bg-white dark:bg-slate-700 rounded-lg shadow hover:shadow-md transition-all text-center"
+                        data-name="Horno" data-watts="1200" data-hours="0.5" data-days="15" aria-label="Añadir Horno">
                         <i class="fas fa-temperature-high text-3xl text-electric-500 mb-2"></i>
                         <p class="font-medium">Horno</p>
                         <p class="text-xs text-gray-500 dark:text-gray-400">1200W, 0.5h/día</p>
@@ -304,10 +390,11 @@
     <section id="tips" class="py-20">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl font-bold text-center mb-16 relative">
-                <span class="bg-gradient-to-r from-electric-500 to-energy-500 bg-clip-text text-transparent">Consejos de Ahorro</span>
-                <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-electric-500 to-energy-500 rounded-full"></span>
+                <span class="bg-gradient-to-r from-electric-500 to-energy-500 bg-clip-text text-transparent">Consejos de
+                    Ahorro</span>
+                <span
+                    class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-electric-500 to-energy-500 rounded-full"></span>
             </h2>
-            
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Tip 1 -->
                 <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-lg">
@@ -318,14 +405,14 @@
                         <h3 class="text-lg font-bold">Iluminación LED</h3>
                     </div>
                     <p class="text-gray-500 dark:text-gray-400">
-                        Cambia tus bombillas tradicionales por LED. Consumen hasta un 85% menos de energía y duran mucho más.
+                        Cambia tus bombillas tradicionales por LED. Consumen hasta un 85% menos de energía y duran mucho
+                        más.
                     </p>
                     <div class="mt-4 flex items-center text-sm text-electric-500 dark:text-electric-400">
                         <i class="fas fa-bolt mr-2"></i>
                         <span>Ahorro estimado: 50-100€/año</span>
                     </div>
                 </div>
-                
                 <!-- Tip 2 -->
                 <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-lg">
                     <div class="flex items-center mb-4">
@@ -335,14 +422,14 @@
                         <h3 class="text-lg font-bold">Temperatura ideal</h3>
                     </div>
                     <p class="text-gray-500 dark:text-gray-400">
-                        Configura tu termostato a 20°C en invierno y 25°C en verano. Cada grado adicional supone un 7% más de consumo.
+                        Configura tu termostato a 20°C en invierno y 25°C en verano. Cada grado adicional supone un 7%
+                        más de consumo.
                     </p>
                     <div class="mt-4 flex items-center text-sm text-energy-500 dark:text-energy-400">
                         <i class="fas fa-bolt mr-2"></i>
                         <span>Ahorro estimado: 70-150€/año</span>
                     </div>
                 </div>
-                
                 <!-- Tip 3 -->
                 <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-lg">
                     <div class="flex items-center mb-4">
@@ -352,14 +439,14 @@
                         <h3 class="text-lg font-bold">Modo espera</h3>
                     </div>
                     <p class="text-gray-500 dark:text-gray-400">
-                        Desconecta los aparatos que no uses. El modo standby puede representar hasta el 10% de tu factura eléctrica.
+                        Desconecta los aparatos que no uses. El modo standby puede representar hasta el 10% de tu
+                        factura eléctrica.
                     </p>
                     <div class="mt-4 flex items-center text-sm text-electric-500 dark:text-electric-400">
                         <i class="fas fa-bolt mr-2"></i>
                         <span>Ahorro estimado: 30-80€/año</span>
                     </div>
                 </div>
-                
                 <!-- Tip 4 -->
                 <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-lg">
                     <div class="flex items-center mb-4">
@@ -369,14 +456,14 @@
                         <h3 class="text-lg font-bold">Electrodomésticos eficientes</h3>
                     </div>
                     <p class="text-gray-500 dark:text-gray-400">
-                        Al renovar electrodomésticos, elige modelos con etiqueta energética A+++. Ahorrarás en consumo a largo plazo.
+                        Al renovar electrodomésticos, elige modelos con etiqueta energética A+++. Ahorrarás en consumo a
+                        largo plazo.
                     </p>
                     <div class="mt-4 flex items-center text-sm text-energy-500 dark:text-energy-400">
                         <i class="fas fa-bolt mr-2"></i>
                         <span>Ahorro estimado: 100-300€/año</span>
                     </div>
                 </div>
-                
                 <!-- Tip 5 -->
                 <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-lg">
                     <div class="flex items-center mb-4">
@@ -386,14 +473,14 @@
                         <h3 class="text-lg font-bold">Aprovecha la luz natural</h3>
                     </div>
                     <p class="text-gray-500 dark:text-gray-400">
-                        Organiza tus espacios para maximizar el uso de luz natural. Reduce el tiempo de uso de luces artificiales.
+                        Organiza tus espacios para maximizar el uso de luz natural. Reduce el tiempo de uso de luces
+                        artificiales.
                     </p>
                     <div class="mt-4 flex items-center text-sm text-electric-500 dark:text-electric-400">
                         <i class="fas fa-bolt mr-2"></i>
                         <span>Ahorro estimado: 20-50€/año</span>
                     </div>
                 </div>
-                
                 <!-- Tip 6 -->
                 <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-lg">
                     <div class="flex items-center mb-4">
@@ -403,11 +490,28 @@
                         <h3 class="text-lg font-bold">Agua caliente eficiente</h3>
                     </div>
                     <p class="text-gray-500 dark:text-gray-400">
-                        Duchas cortas y lavadoras con agua fría. Calentar agua representa el 25% del consumo energético del hogar.
+                        Duchas cortas y lavadoras con agua fría. Calentar agua representa el 25% del consumo energético
+                        del hogar.
                     </p>
                     <div class="mt-4 flex items-center text-sm text-energy-500 dark:text-energy-400">
                         <i class="fas fa-bolt mr-2"></i>
                         <span>Ahorro estimado: 60-120€/año</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 bg-white dark:bg-slate-800 p-8 rounded-xl shadow-lg">
+                <h3 class="text-xl font-bold mb-6">Recomendaciones Personalizadas</h3>
+                <div id="personalized-tips" class="space-y-4">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 mt-1">
+                            <div class="p-2 rounded-full bg-electric-100 dark:bg-electric-900 mr-4">
+                                <i class="fas fa-info-circle text-electric-500 dark:text-electric-400"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-gray-600 dark:text-gray-300">Calcula tu consumo para recibir recomendaciones
+                                personalizadas basadas en tus electrodomésticos y patrones de uso.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -418,31 +522,45 @@
     <section id="results" class="py-20 bg-gray-50 dark:bg-slate-800">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl font-bold text-center mb-16 relative">
-                <span class="bg-gradient-to-r from-electric-500 to-energy-500 bg-clip-text text-transparent">Resultados Detallados</span>
-                <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-electric-500 to-energy-500 rounded-full"></span>
+                <span class="bg-gradient-to-r from-electric-500 to-energy-500 bg-clip-text text-transparent">Resultados
+                    Detallados</span>
+                <span
+                    class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-electric-500 to-energy-500 rounded-full"></span>
             </h2>
-            
             <div class="bg-white dark:bg-slate-700 rounded-xl shadow-lg overflow-hidden">
                 <div class="p-6 border-b border-gray-200 dark:border-slate-600">
                     <h3 class="text-xl font-bold">Desglose de Consumo</h3>
                     <p class="text-gray-500 dark:text-gray-400">Detalle del consumo por electrodoméstico</p>
                 </div>
-                
                 <div class="overflow-x-auto">
                     <table class="w-full">
                         <thead class="bg-gray-50 dark:bg-slate-600">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Electrodoméstico</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Potencia (W)</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Uso diario</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Días/mes</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Consumo (kWh/mes)</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Costo (€/mes)</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    Electrodoméstico</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    Potencia (W)</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    Uso diario</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    Días/mes</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    Consumo (kWh/mes)</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    Costo (por mes)</th>
                             </tr>
                         </thead>
-                        <tbody id="results-table" class="bg-white dark:bg-slate-700 divide-y divide-gray-200 dark:divide-slate-600">
+                        <tbody id="results-table"
+                            class="bg-white dark:bg-slate-700 divide-y divide-gray-200 dark:divide-slate-600">
                             <tr>
-                                <td colspan="6" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">Añade electrodomésticos y haz clic en "Calcular Consumo"</td>
+                                <td colspan="6" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">Añade
+                                    electrodomésticos y haz clic en "Calcular Consumo"</td>
                             </tr>
                         </tbody>
                         <tfoot class="bg-gray-50 dark:bg-slate-600 font-bold">
@@ -452,12 +570,11 @@
                                 <td id="total-hours" class="px-6 py-3">-</td>
                                 <td id="total-days" class="px-6 py-3">-</td>
                                 <td id="total-consumption" class="px-6 py-3">0 kWh/mes</td>
-                                <td id="total-cost" class="px-6 py-3 text-electric-600 dark:text-electric-400">€0.00</td>
+                                <td id="total-cost" class="px-6 py-3 text-electric-600 dark:text-electric-400">0.00</td>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
-                
                 <div class="p-6 border-t border-gray-200 dark:border-slate-600">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
@@ -475,7 +592,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="mt-12 bg-white dark:bg-slate-800 p-8 rounded-xl shadow-lg">
                 <h3 class="text-xl font-bold mb-6">Comparativa con Hogares Similares</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -500,22 +616,6 @@
                         <div id="efficiency-comparison" class="mt-2 text-sm"></div>
                     </div>
                 </div>
-                
-                <div class="mt-8 pt-8 border-t border-gray-200 dark:border-slate-700">
-                    <h4 class="font-bold mb-4">Recomendaciones Personalizadas</h4>
-                    <div id="personalized-tips" class="space-y-4">
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 mt-1">
-                                <div class="p-2 rounded-full bg-electric-100 dark:bg-electric-900 mr-4">
-                                    <i class="fas fa-info-circle text-electric-500 dark:text-electric-400"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <p class="text-gray-600 dark:text-gray-300">Calcula tu consumo para recibir recomendaciones personalizadas basadas en tus electrodomésticos y patrones de uso.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -525,18 +625,25 @@
         <div class="container mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-6 md:mb-0">
-                    <a href="#" class="text-2xl font-bold bg-gradient-to-r from-electric-500 to-energy-500 bg-clip-text text-transparent">EnergyCalc</a>
+                    <a href="#"
+                        class="text-2xl font-bold bg-gradient-to-r from-electric-500 to-energy-500 bg-clip-text text-transparent">EnergyCalc</a>
                     <p class="text-gray-500 dark:text-gray-400 mt-2">© 2023 Calculadora de Consumo Energético</p>
                 </div>
                 <div class="flex space-x-6">
-                    <a href="#calculator" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors">Calculadora</a>
-                    <a href="#appliances" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors">Electrodomésticos</a>
-                    <a href="#tips" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors">Consejos</a>
-                    <a href="#results" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors">Resultados</a>
+                    <a href="#calculator"
+                        class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors">Calculadora</a>
+                    <a href="#appliances"
+                        class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors">Electrodomésticos</a>
+                    <a href="#tips"
+                        class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors">Consejos</a>
+                    <a href="#results"
+                        class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors">Resultados</a>
                 </div>
             </div>
-            <div class="mt-8 pt-8 border-t border-gray-200 dark:border-slate-700 text-center text-sm text-gray-500 dark:text-gray-400">
-                <p>Esta calculadora proporciona estimaciones teóricas basadas en los datos introducidos. Los consumos reales pueden variar según el modelo y estado de los electrodomésticos.</p>
+            <div
+                class="mt-8 pt-8 border-t border-gray-200 dark:border-slate-700 text-center text-sm text-gray-500 dark:text-gray-400">
+                <p>Esta calculadora proporciona estimaciones teóricas basadas en los datos introducidos. Los consumos
+                    reales pueden variar según el modelo y estado de los electrodomésticos.</p>
             </div>
         </div>
     </footer>
@@ -546,4 +653,5 @@
     <!-- External JavaScript -->
     <script src="script.js" defer></script>
 </body>
+
 </html>

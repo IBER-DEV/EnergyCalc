@@ -391,10 +391,54 @@ calculateBtn.addEventListener('click', () => {
 });
 
 // Charts
-let consumptionChart, costChart;
+
+let consumptionChart;
+let costChart;
+
+// Función para formatear valores monetarios según la moneda
+function formatCurrency(value, currency) {
+    const formatter = new Intl.NumberFormat('es-CO', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    });
+    
+    switch (currency) {
+        case 'COP':
+            return `COP ${formatter.format(value)}`;
+        case 'EUR':
+            return `€${value.toFixed(2)}`;
+        case 'USD':
+            return `$${value.toFixed(2)}`;
+        case 'GBP':
+            return `£${value.toFixed(2)}`;
+        default:
+            return `€${value.toFixed(2)}`;
+    }
+}
 
 function calculateConsumption() {
-    const tariff = parseFloat(document.getElementById('tarifa').value) || 0.15;
+    const selectedCurrency = document.getElementById('currency-selector').value;
+    let currencySymbol = '€';
+
+    // Definir símbolos de moneda
+    switch (selectedCurrency) {
+        case 'EUR':
+            currencySymbol = '€';
+            break;
+        case 'USD':
+            currencySymbol = '$';
+            break;
+        case 'GBP':
+            currencySymbol = '£';
+            break;
+        case 'COP':
+            currencySymbol = 'COP';
+            break;
+        default:
+            currencySymbol = '€'; // Moneda por defecto
+    }
+
+    const tariff = parseFloat(document.getElementById('tarifa').value) || (selectedCurrency === 'COP' ? 600 : 0.15);
     const appliances = document.querySelectorAll('.appliance-card');
     
     let totalDaily = 0;
@@ -412,12 +456,12 @@ function calculateConsumption() {
         const hours = parseFloat(appliance.querySelector('.appliance-hours').value) || 0;
         const days = parseFloat(appliance.querySelector('.appliance-days').value) || 0;
         
-        // Skip invalid entries
+        // Validar entradas
         if (watts < 0 || hours < 0 || hours > 24 || days < 0 || days > 31) {
-            return; // Skip this appliance
+            return; // Saltar este electrodoméstico
         }
         
-        // Calculate consumption
+        // Calcular consumo
         const daily = (watts * hours) / 1000;
         const monthly = daily * days;
         const cost = monthly * tariff;
@@ -441,7 +485,28 @@ function calculateConsumption() {
         });
     });
     
-    // Save calculation results
+    // Validar si no hay datos válidos
+    if (applianceData.length === 0) {
+        document.getElementById('results-table').innerHTML = `
+            <tr>
+                <td colspan="6" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">No hay electrodomésticos válidos para calcular. Por favor, añade o corrige los datos.</td>
+            </tr>
+        `;
+        document.getElementById('daily-consumption').textContent = '0 kWh';
+        document.getElementById('monthly-consumption').textContent = '0 kWh';
+        document.getElementById('monthly-cost').textContent = formatCurrency(0, selectedCurrency);
+        document.getElementById('annual-consumption').textContent = '0 kWh';
+        document.getElementById('annual-cost').textContent = formatCurrency(0, selectedCurrency);
+        document.getElementById('daily-bar').style.width = '0%';
+        document.getElementById('monthly-bar').style.width = '0%';
+        document.getElementById('cost-bar').style.width = '0%';
+        updateCharts([]);
+        updateComparison(0);
+        updatePersonalizedTips([], 0);
+        return;
+    }
+    
+    // Guardar resultados en localStorage
     localStorage.setItem('lastCalculation', JSON.stringify({
         daily: totalDaily,
         monthly: totalMonthly,
@@ -449,18 +514,18 @@ function calculateConsumption() {
         annual: totalMonthly * 12,
         annualCost: totalCost * 12
     }));
-    
-    // Update summary
+
+    // Actualizar resumen
     document.getElementById('daily-consumption').textContent = totalDaily.toFixed(2) + ' kWh';
     document.getElementById('monthly-consumption').textContent = totalMonthly.toFixed(2) + ' kWh';
-    document.getElementById('monthly-cost').textContent = '€' + totalCost.toFixed(2);
+    document.getElementById('monthly-cost').textContent = formatCurrency(totalCost, selectedCurrency);
     document.getElementById('annual-consumption').textContent = (totalMonthly * 12).toFixed(2) + ' kWh';
-    document.getElementById('annual-cost').textContent = '€' + (totalCost * 12).toFixed(2);
+    document.getElementById('annual-cost').textContent = formatCurrency(totalCost * 12, selectedCurrency);
     
-    // Animate bars
-    const maxDaily = 20; // 20 kWh as 100% for visualization
-    const maxMonthly = 600; // 600 kWh as 100% for visualization
-    const maxCost = 100; // €100 as 100% for visualization
+    // Animar barras
+    const maxDaily = 20; // 20 kWh como 100% para visualización
+    const maxMonthly = 600; // 600 kWh como 100% para visualización
+    const maxCost = selectedCurrency === 'COP' ? 1000000 : 100; // Ajustar para COP
     
     const dailyPercent = Math.min((totalDaily / maxDaily) * 100, 100);
     const monthlyPercent = Math.min((totalMonthly / maxMonthly) * 100, 100);
@@ -470,64 +535,56 @@ function calculateConsumption() {
     document.getElementById('monthly-bar').style.width = monthlyPercent + '%';
     document.getElementById('cost-bar').style.width = costPercent + '%';
     
-    // Update results table
+    // Actualizar tabla de resultados
     const resultsTable = document.getElementById('results-table');
     resultsTable.innerHTML = '';
     
-    if (applianceData.length === 0) {
-        resultsTable.innerHTML = `
-            <tr>
-                <td colspan="6" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">Añade electrodomésticos y haz clic en "Calcular Consumo"</td>
-            </tr>
+    applianceData.forEach(data => {
+        const row = document.createElement('tr');
+        row.className = 'hover:bg-gray-50 dark:hover:bg-slate-600';
+        row.innerHTML = `
+            <td class="px-6 py-4 whitespace-nowrap">${data.name}</td>
+            <td class="px-6 py-4 whitespace-nowrap">${data.watts} W</td>
+            <td class="px-6 py-4 whitespace-nowrap">${data.hours} h</td>
+            <td class="px-6 py-4 whitespace-nowrap">${data.days} días</td>
+            <td class="px-6 py-4 whitespace-nowrap">${data.monthly.toFixed(2)} kWh</td>
+            <td class="px-6 py-4 whitespace-nowrap text-electric-600 dark:text-electric-400">${formatCurrency(data.cost, selectedCurrency)}</td>
         `;
-    } else {
-        applianceData.forEach(data => {
-            const row = document.createElement('tr');
-            row.className = 'hover:bg-gray-50 dark:hover:bg-slate-600';
-            row.innerHTML = `
-                <td class="px-6 py-4 whitespace-nowrap">${data.name}</td>
-                <td class="px-6 py-4 whitespace-nowrap">${data.watts} W</td>
-                <td class="px-6 py-4 whitespace-nowrap">${data.hours} h</td>
-                <td class="px-6 py-4 whitespace-nowrap">${data.days} días</td>
-                <td class="px-6 py-4 whitespace-nowrap">${data.monthly.toFixed(2)} kWh</td>
-                <td class="px-6 py-4 whitespace-nowrap text-electric-600 dark:text-electric-400">€${data.cost.toFixed(2)}</td>
-            `;
-            resultsTable.appendChild(row);
-        });
-    }
+        resultsTable.appendChild(row);
+    });
     
-    // Update totals in table footer
+    // Actualizar totales en el pie de la tabla
     document.getElementById('total-watts').textContent = totalWatts + ' W';
     document.getElementById('total-hours').textContent = totalHours + ' h';
     document.getElementById('total-days').textContent = totalDays + ' días';
     document.getElementById('total-consumption').textContent = totalMonthly.toFixed(2) + ' kWh/mes';
-    document.getElementById('total-cost').textContent = '€' + totalCost.toFixed(2);
+    document.getElementById('total-cost').textContent = formatCurrency(totalCost, selectedCurrency);
     
-    // Update charts
+    // Actualizar gráficos
     updateCharts(applianceData);
     
-    // Update comparison
+    // Actualizar comparación
     updateComparison(totalMonthly);
     
-    // Update personalized tips
+    // Actualizar consejos personalizados
     updatePersonalizedTips(applianceData, totalMonthly);
 }
 
 function updateCharts(applianceData) {
-    // Check if Chart is available
     if (typeof Chart === 'undefined') {
-        console.error('Chart.js not loaded');
+        console.error('Chart.js no está cargado');
         return;
     }
 
     const ctxConsumption = document.getElementById('consumption-chart');
     const ctxCost = document.getElementById('cost-chart');
     
-    // Check if chart elements exist
     if (!ctxConsumption || !ctxCost) {
-        console.error('Chart elements not found');
+        console.error('Elementos de gráficos no encontrados');
         return;
     }
+    
+    const selectedCurrency = document.getElementById('currency-selector').value;
     
     const labels = applianceData.map(data => data.name);
     const consumptionData = applianceData.map(data => data.monthly);
@@ -543,10 +600,8 @@ function updateCharts(applianceData) {
         'rgba(121, 85, 72, 0.7)'
     ];
     
-    // Get theme-aware text color
     const textColor = document.documentElement.classList.contains('dark') ? '#e2e8f0' : '#334155';
     
-    // Destroy existing charts if they exist
     if (consumptionChart) {
         consumptionChart.destroy();
     }
@@ -555,7 +610,6 @@ function updateCharts(applianceData) {
     }
     
     try {
-        // Create new charts
         consumptionChart = new Chart(ctxConsumption, {
             type: 'doughnut',
             data: {
@@ -618,7 +672,7 @@ function updateCharts(applianceData) {
                                 const value = context.raw || 0;
                                 const total = context.dataset.data.reduce((a, b) => a + b, 0);
                                 const percentage = Math.round((value / total) * 100);
-                                return `${label}: €${value.toFixed(2)} (${percentage}%)`;
+                                return `${label}: ${formatCurrency(value, selectedCurrency)} (${percentage}%)`;
                             }
                         }
                     }
@@ -626,10 +680,29 @@ function updateCharts(applianceData) {
             }
         });
     } catch (e) {
-        console.error('Error creating charts:', e);
+        console.error('Error al crear gráficos:', e);
     }
 }
 
+// Función para actualizar la tarifa por defecto según la moneda seleccionada
+function updateTariffDefault() {
+    const currency = document.getElementById('currency-selector').value;
+    const tariffInput = document.getElementById('tarifa');
+    if (!tariffInput.value || tariffInput.value === '0') {
+        tariffInput.value = currency === 'COP' ? '600' : '0.15';
+    }
+}
+
+// Evento para actualizar la tarifa y recalcular al cambiar la moneda
+document.getElementById('currency-selector').addEventListener('change', () => {
+    updateTariffDefault();
+    calculateConsumption();
+});
+
+// Inicializar tarifa por defecto al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+    updateTariffDefault();
+});
 function updateComparison(userConsumption) {
     document.getElementById('user-consumption').textContent = userConsumption.toFixed(2);
     

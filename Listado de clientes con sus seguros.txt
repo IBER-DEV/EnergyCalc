@@ -1,0 +1,18 @@
+Listado de clientes con sus seguros y montos facturados, ordenados por cliente y fecha de facturación
+
+SELECT 
+    c.cliente_id,
+    c.nombre,
+    c.apellido,
+    c.razon_social,
+    s.seguro_id,
+    s.tipo_seguro,
+    s.descripcion,
+    f.factura_id,
+    f.fecha_facturacion,
+    df.subtotal
+FROM CLIENTES c
+JOIN FACTURAS f ON c.cliente_id = f.cliente_id
+JOIN DETALLE_FACTURAS df ON f.factura_id = df.factura_id
+JOIN SEGUROS s ON df.seguro_id = s.seguro_id
+ORDER BY c.cliente_id, f.fecha_facturacion;
