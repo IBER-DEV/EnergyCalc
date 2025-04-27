@@ -2,6 +2,8 @@
 
 ## Descripción
 EnergyCalc es una plataforma web diseñada para monitorear y optimizar el consumo energético de hogares. Permite a los usuarios calcular el consumo de sus electrodomésticos y generar reportes personalizados de costes fijos. La aplicación está construida con **JavaScript**, **HTML**, **CSS** y **Tailwind CSS** para una interfaz moderna y responsiva.
+![image](https://github.com/user-attachments/assets/362b0411-cc14-472b-a22f-f9d9d616a897)
+
 
 ## Características
 - **Monitoreo de Consumo**: Registra y analiza el consumo energético de electrodomésticos en tiempo real.
@@ -15,9 +17,6 @@ EnergyCalc es una plataforma web diseñada para monitorear y optimizar el consum
   - CSS3
   - JavaScript (ES6+)
   - Tailwind CSS
-- **Herramientas**:
-  - Vite (para el entorno de desarrollo)
-  - npm (gestor de paquetes)
 
 ## Instalación
 Sigue estos pasos para configurar el proyecto localmente:
@@ -31,18 +30,10 @@ Sigue estos pasos para configurar el proyecto localmente:
    ```bash
    cd energycalc
    ```
-
-3. **Instala las dependencias**:
+3. **Inicia el servidor de desarrollo**:
    ```bash
-   npm install
+   inicia el archivo index.html
    ```
-
-4. **Inicia el servidor de desarrollo**:
-   ```bash
-   npm run dev
-   ```
-
-5. Abre tu navegador en `http://localhost:5173` para ver la aplicación.
 
 ## Uso
 1. **Registro de Electrodomésticos**: Ingresa los datos de tus electrodomésticos (potencia, horas de uso, etc.) en la sección correspondiente.
@@ -74,6 +65,8 @@ energycalc/
 
 ## Licencia
 Este proyecto está bajo la [Licencia MIT](LICENSE).
+## ver el sitio
+https://energycalc.pages.dev/
 
 ## Contacto
 Para soporte o consultas, contacta al equipo en:
